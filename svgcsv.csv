@@ -1,2 +1,5 @@
-shape,color,cx,cy,rx,ry
-circle,green,40,40,0,0
+shape,color,x,y,height,width,cx,cy,r,rx,ry,text
+circle,green,0,0,0,0,40,40,0,0,""
+rectangle,red,0,0,100,200,""
+ellipse,pink,0,0,0,0,250,50,150,50,""
+text,yellow,150,50,"Hey, how's it going"
