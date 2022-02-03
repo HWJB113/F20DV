@@ -1,0 +1,25 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ 
+<script> 
+//array of different types of data
+var myData = ['a', 4, 1, 'b', 6, 2, 8, 9, 'z']; 
+      
+var span = d3.select("body") 
+          .selectAll("span") 
+          .data(myData) 
+          .enter() 
+            .append('span') 
+            //set the value of each span to be the value in the array
+            .text(function (d, i) { 
+                     return d; 
+            })
+            //if the value is an integer in base 10, change the colour to green, else make it blue
+            .style("color",function(d, i){
+            	if(!isNaN(parseInt(d, 10))){
+              	return "green";
+              }
+              else{
+              	return "blue";
+              }
+            })
+</script> 

@@ -1,0 +1,28 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ <!--- Control span element to show text displayed normally-->
+<span>Test</span> 
+ 
+<script>
+    //creating a new span by using d3 to select the body of the page, and appending a new span
+    //uses chaining to select and then append new element 
+    let newspan = d3.select("body").append('span'); 
+      //sets the text of new element to hello
+    newspan.text('hello'); 
+    
+        //does this loop 10 times
+    for(let x = 1; x<11; x++){
+      //create a new div element, and give it the text value of the current iteration of the loop. div id in case manual changes
+      //are needed later 
+    	let newdiv = d3.select("body").append('div').attr("id", "div" +x ).text(x);
+      //if the current iteration of the loop is before the 5th, turn the text red, otherwise
+      //turn it green 
+       if(x <6){
+        newdiv.style("color", "red");
+      } else{
+      	newdiv.style("color", "green");
+      }
+    }
+    //manually change the first div to be the colour purple
+    d3.select("#div1").style("color","purple").text("start");
+    
+</script> 

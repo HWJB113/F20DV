@@ -1,0 +1,87 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+
+<script> 
+
+let titaniccsv = 'https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/test.csv'; 
+
+/* 
+
+PassengerId,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked 
+
+892,3,"Kelly, Mr. James",male,34.5,0,0,330911,7.8292,,Q 
+
+893,3,"Wilkes, Mrs. James (Ellen Needs)",female,47,1,0,363272,7,,S 
+
+894,2,"Myles, Mr. Thomas Francis",male,62,0,0,240276,9.6875,,Q 
+
+895,3,"Wirz, Mr. Albert",male,27,0,0,315154,8.6625,,S 
+
+*/ 
+
+
+//using an async function as the nature of Javascript means that code is not always 
+//executed sequentially. 
+let csv = async function() { 
+
+//initialise a number of variables that will store the count of values extracted from the csv file
+let mrCount = 0; 
+
+let mrsCount =0; 
+
+let otherCount =0; 
+
+let maleCount = 0; 
+
+let femaleCount = 0; 
+
+let rowCount =0; 
+//d3.csv goes through each row in the csv file (not including the header row, as opposed to parseRows)
+let values = await d3.csv(titaniccsv, function(data) { 
+    //.inlcludes used to catch if the string of the name has Mr. in it
+	if(data.Name.includes("Mr.")){ 
+
+      mrCount +=1; 
+    //the same is done, but for checking for Mrs.
+  }else if(data.Name.includes("Mrs.")){ 
+
+      mrsCount+=1; 
+
+  } 
+    //as a catch all term for other honourific. Could be changed to have master or Miss or Ms as seperate counts
+    else{ 
+
+    		otherCount +=1; 
+
+    } 
+    //as this string is one word, a simple == will suffice, simply matching the sex string or not
+	if(data.Sex =="male"){ 
+
+    		maleCount +=1; 
+
+    } 
+    //assumption that in the dataset sex has only 2 values, this may not be the case in all datasets, but appeared to be here
+	else{ 
+
+    		femaleCount +=1; 
+
+    } 
+
+}) 
+//once the csv has been gone through, place the variables into an array, then use that array in a select all as data to 
+//display the values of each count in a paragraph
+var counts = [mrCount, mrsCount, otherCount, maleCount, femaleCount];
+var p = d3.select("body")
+        .selectAll("p")
+        .data(counts)
+        .enter()
+        .append('p')
+        .text(function (d, i){
+        	return d;
+        });
+}; 
+//ADDED NOTE: After looking through the code, it would clearly be much more efficient to use the array from the start and simply
+//index rather than creating 4 variables and then the array. Next task uses this instead
+
+//call the async function
+csv(); 
+</script> 

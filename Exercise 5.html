@@ -1,0 +1,14 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ 
+<script> 
+//showing the way that variables can be assigned to d3 selections
+//select the body
+var bodyElement = d3.select("body"); 
+//create a new element
+var div = bodyElement.append("div"); 
+//set the text of that element to hello world and colour to green
+div.text("Hello World!"); 
+div.style("color", "green");
+// same as doing it all in one go (can be done over multiple lines) in chaining. Can be more efficient
+d3.select("body").append("div").text("Hello World!"); 
+</script> 

@@ -1,0 +1,52 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ 
+<script> 
+ 
+let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv'; 
+/* 
+age,anaemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatini
+ne,serum_sodium,sex,smoking,time,DEATH_EVENT 
+75,0,582,0,20,1,265000,1.9,130,1,0,4,1 
+55,0,7861,0,38,0,263358.03,1.1,136,1,0,6,1 
+65,0,146,0,20,0,162000,1.3,129,1,1,7,1 
+50,1,111,0,20,0,210000,1.9,137,1,0,7,1 
+*/ 
+let heartFailure = async function(){
+//array storing counts of deaths within specific ranges
+//count[0] - 1 - 30
+//count[1] - 31 - 40
+//count[2] - 41 - 60
+//count[3] - 60 - 100
+let counts = [0,0,0,0]
+//goes through each row in the csv
+let over50 = await d3.csv(heartfailurecsv, function(data) { 
+ 			//for each row in the csv check the age value and sort this
+       //row into one of the 4 groupings
+      if(data.age >=1 && data.age <=30){
+      	counts[0] ++;
+      }
+      else if(data.age >=31 && data.age <=40){
+      	counts[1] ++;
+      }
+  		else if(data.age >=41 && data.age <=60){
+      	counts[2] ++;
+      }
+      else if(data.age >=61 && data.age <=100){
+      	counts[3] ++;
+      }     
+	}); 
+  //create a paragraph tage for each group in count and display the number of 
+  //deaths within that age range
+  var p = d3.select("body")
+				.selectAll("p")
+        .data(counts)
+        .enter()
+        .append('p')
+        .text(function (d, i){
+        	return d;
+        });
+ 
+}; 
+//call function
+heartFailure();
+</script>

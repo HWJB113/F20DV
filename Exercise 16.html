@@ -1,0 +1,138 @@
+ 
+
+<script src='https://d3js.org/d3.v7.min.js'></script>  
+
+  
+
+<script>  
+
+const width  = 500;  
+
+const height = 500;  
+
+  
+
+const data   = [10, 15, 20, 25, 30];  
+
+// Note different valid ways of specifying color  
+
+const colors = ['#ffffcc','red','rgb(0,255,0)','#31a354','#006837'];  
+
+  
+//create the svg, with specified width and height 
+const svg = d3.select("body")  
+
+            .append("svg")  
+
+            .attr("width", width)  
+
+            .attr("height", height);  
+
+  
+//for each value in the dataset, create a new g element
+const g = svg.selectAll("g")  
+
+            .data(data)  
+
+            .enter()  
+
+            .append("g")  
+
+            .attr("transform", function(d, i) {  
+
+                return "translate(0,0)";  
+
+            })  
+
+//can seem slightly counter intuitive that as g.append here is called once, one circle should appear
+//but this occurs for every item in data, as the g variable has that selectAll
+
+//append a circle to each g element, a set amount of pixels away from each other
+g.append("circle")  
+
+  //each cicle is furhter to the right
+  .attr("cx", function(d, i) {  
+
+    return i*100 + 50;  
+
+  })  
+  //maintain the height of each
+  .attr("cy", function(d, i) {  
+
+    return 100;  
+
+  })  
+  //the radius of the circle, determining the size. Takes the current value in the dataset and multplies it by 1.5
+  //different number would lead to different sized circles
+  .attr("r", function(d) {  
+
+    return d*1.5;  
+
+  })  
+
+  //fill the circles in order of the colour array
+  .attr("fill", function(d, i){  
+
+    return colors[i];  
+
+  })  
+
+//places the text under the circles
+g.append("text")  
+
+
+.attr("x", function(d, i) {  
+
+    return i * 100 + 40;  
+
+})  
+//stay on the same y axis
+.attr("y", 150)  
+
+.attr("stroke", "teal")  
+
+.attr("font-size", "12px")  
+
+.attr("font-family", "sans-serif")  
+
+.text(function(d) {  
+
+    return d;  
+
+})  
+
+  //very similar to above, but for squares. Key differences are the attributes, circle has cx, cy, and radius.
+g.append("rect") 
+
+//same as the cx, move squares to the right
+.attr("x", function(d, i){ 
+
+  	return i* 100+35; 
+
+  }) 
+//maintain the same level 
+  .attr("y", function(d, i){ 
+
+  	return 200; 
+
+  }) 
+//creates the width of the square in a simialr manner as the circle, multiplying the current value by a set number
+  .attr("width", function(d, i){ 
+
+  	return d *2; 
+
+  }) 
+//creates the height of the square in a simialr manner as the circle, multiplying the current value by a set number
+  .attr("height", function(d, i){ 
+
+  	return d* 2; 
+
+  }) 
+//same as above, goes through colour array
+  .attr("fill", function(d, i){ 
+
+  	return colors[i]; 
+
+  }); 
+//no text is used again, as the values remain the same and it is just as effective to have the number in the middle between circle and square
+</script> 

@@ -1,0 +1,172 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+
+<script> 
+
+// Set Dimensions 
+
+const xSize = 600; const ySize = 600; 
+
+const margin = 40; 
+
+const xMax = xSize - margin*2; 
+
+const yMax = ySize - margin*2; 
+
+// Create Random Points 
+
+const numPoints = 100; 
+
+const data = []; 
+
+const data2 = []
+
+//fills the arrays with 100 data points to be used. The lower the number of datapoints, the less will 
+//appear on the graph, lowering the accuracy of the curve
+for (let i = 0; i < numPoints; i++) { data.push( {x: i/100, y: Math.sin( 6.2 * i/100 ) } ); } 
+for (let i = 0; i < numPoints; i++) { data2.push( {x: i/100, y: Math.sin( 3.5 * i/100 ) } ); } 
+// Get the 'limits' of the data - the full extent (mins and max) 
+
+//used to create the colours of the lines, making values more likely to be blue or white
+var myColor1 = d3.scaleLinear().domain([1,10]).range(["white", "blue"]); 
+
+
+// so the plotted data fits perfectly 
+const xExtent = d3.extent( data, d=>{ return d.x } ); 
+const yExtent = d3.extent( data, d=>{ return d.y } ); 
+const svg = d3.select("body") 
+
+.append("svg") 
+
+.attr('width', xSize ) 
+
+.attr('height', ySize ) 
+
+.append("g") 
+
+.attr("transform","translate(" + margin + "," + margin + ")"); 
+
+//so the x and y values scale to the correct size, or would go outside the boundaries
+const y = d3.scaleLinear() 
+
+.domain([ yExtent[0], yExtent[1] ]) 
+
+.range([ yMax, 0]); 
+
+
+const x = d3.scaleLinear() 
+
+.domain([ xExtent[0], xExtent[1] ]) 
+
+.range([0, xMax]); 
+
+//function used to plot the values on the graph framework 
+let createGraph = function(data) {
+
+
+// Add the line 
+//svg path is the overall line that the data points will generate. 
+svg.append("path") 
+
+.datum(data) 
+
+.attr("fill", "none") 
+
+.attr("stroke", "green") 
+
+.attr("stroke-width", 1.5) 
+
+.attr("d", d3.line() 
+
+.x(function(d) { return x(d.x) }) 
+
+.y(function(d) { return y(d.y) }) 
+
+
+
+)}; 
+//used to create the frame of the graph
+let createFrame = function(){
+
+
+svg.append("g") 
+
+.attr("transform", "translate(0," + yMax + ")") 
+
+.call(d3.axisBottom(x)) 
+
+.attr('color', 'green'); // make bottom axis green 
+
+// top 
+
+svg.append("g") 
+
+.call(d3.axisTop(x)); 
+
+// Y Axis 
+
+
+
+// left y axis 
+
+svg.append("g") 
+
+.call(d3.axisLeft(y)); 
+
+// right y axis 
+
+svg.append("g") 
+
+.attr("transform", `translate(${yMax},0)`) 
+
+.call(d3.axisRight(y)); 
+
+
+
+};
+
+//call both the functions that create the frame and graph.
+createFrame();
+
+//make a sepearte line for each dataset
+createGraph(data); 
+createGraph(data2); 
+
+//for the first graph, add circles to the datapoints, with matching x and y values
+ svg.selectAll("dot") 
+   .data(data)  
+   .enter() 
+   .append("circle") 
+   .attr("cx", function (d) { return x(d.x) } ) 
+   .attr("cy", function (d) { return y(d.y) } ) 
+   .attr("r", 5) 
+   .style("fill", "red");  
+   
+
+   //create rectangles on the second graph, with the colour coming from the d3 color method
+svg.selectAll("dot") 
+   .data(data2)  
+   .enter() 
+   .append("rect") 
+   .attr("x", function (d) { return x(d.x) } ) 
+   .attr("y", function (d) { return y(d.y) } ) 
+   .attr("height", 5 ) 
+   .attr("width",5 ) 
+   .style("fill", function(d){ return myColor1(d.x +50)}); 
+   
+ //adding text to the first graph, using the Math.random function to ensure that not all datapoints receive the text  
+svg.selectAll("text")
+	 .data(data)
+   .enter()
+   .append("text")
+   .attr("x", function (d) {return x(d.x)})
+   .attr("y", function (d) {return y(d.y)})
+   .text(function(d) {
+   		if(Math.random() > .7){
+      return d.x;
+      }
+   
+   })
+
+</script> 
+
+ 

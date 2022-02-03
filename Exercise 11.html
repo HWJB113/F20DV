@@ -1,0 +1,47 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ 
+<script> 
+    //Create SVG element - in this case almost like a canvas, or frame
+    var svg = d3.select("body") 
+    .append("svg") 
+    //sets the maximum height and width. lines with values greater than this won't appear
+    .attr("width",  400) 
+    .attr("height", 400) 
+    //give it a border
+    .style("border", '1px solid green'); 
+ 
+    //Create line element inside SVG 
+    //each of these blocks adds a new line elemen to the svg
+    //the attributes represent the starting and finishing x and y co-ords
+    //horizontal lines will have a y1 and y2 value that are equal and 
+    //vertical lines will have x1 and x2 values that are equal
+    svg.append("line") 
+       .attr("x1", 100) 
+       .attr("x2", 200) 
+       .attr("y1", 100) 
+       .attr("y2", 100) 
+       .attr("stroke", "blue") 
+       
+    svg.append("line") 
+       .attr("x1", 200) 
+       .attr("x2", 200) 
+       .attr("y1", 100) 
+       .attr("y2", 200) 
+       .attr("stroke", "green") 
+       
+    svg.append("line") 
+       .attr("x1", 100) 
+       .attr("x2", 200) 
+       .attr("y1", 200) 
+       .attr("y2", 200) 
+       .attr("stroke", "purple") 
+       
+    svg.append("line") 
+       .attr("x1", 100) 
+       .attr("x2", 100) 
+       .attr("y1", 100) 
+       .attr("y2", 200) 
+       .attr("stroke", "red") 
+
+   //combining these 4 append block gives a square with 4 different coloured sides
+</script> 

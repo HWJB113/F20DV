@@ -1,0 +1,33 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+
+<script>
+
+let csv = "https://raw.githubusercontent.com/HWJB113/F20DV/gh-pages/svgcsv.csv";
+
+var svg = d3.select("body")
+		.append("svg")
+    .attr("width", 400)
+    .attr("height", 400)
+    .style("border", '1px solid green');
+
+d3.csv(csv, function(data){
+			
+      if(data.shape == "rectangle"){
+      svg.append("rect") 
+            .attr("x", data.x) 
+            .attr("y", data.y) 
+            .attr("width", data.width) 
+            .attr("height", data.height) 
+            .attr("fill", data.color); 
+      }
+      else if(data.shape == "circle"){
+      svg.append("circle") 
+       .attr("cx", data.cx) 
+       .attr("cy", data.cy) 
+       .attr("r", data.r);
+      }
+
+
+});
+
+</script>

@@ -1,0 +1,28 @@
+<script src='https://d3js.org/d3.v7.min.js'></script> 
+ 
+<div></div> 
+<div></div> 
+<div></div> 
+ 
+<script> 
+//create an array of objects containing data and keys
+let otherdata = [ {name:'test',  val:1, color: 'red'},  
+                  {name:'other', val:2, color: 'blue'}, 
+                  {name:'b',     val:3, color: 'green'} ]; 
+ 
+//combining chaining and a selectAll which identifies the 3 divs created above, and goes through each object in the 
+//array. From here, could also change the console.log, to fill in the divs with value from the array                 
+let paragraph = d3.select("body") 
+                .selectAll("div") 
+                .data(otherdata) 
+                //in functions at this level function(d) represents the data, and will loop for each item in the data
+                //and the i is simply an incrementing counter, handy as saves doing it manually within the function
+                .text(function (d, i) { 
+                    console.log("d.name: " + d.name); 
+                    console.log("d.val:  " + d.val); 
+                    console.log("i: " + i); 
+                    console.log("this: " + this); 
+ 
+                    return 'cont:' + d.name + " " + d.color; // return value is used to set the 'text' 
+                }); 
+</script> 
