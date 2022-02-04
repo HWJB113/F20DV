@@ -41,6 +41,16 @@ const svg = d3.select("body")
 .append("g") 
 
 .attr("transform","translate(" + margin + "," + margin + ")"); 
+//adds image to the svg, not in background
+//scales with the size of the svg
+   d3.select("svg") 
+  .append("svg:image") 
+  .attr("xlink:href", "https://raw.githubusercontent.com/HWJB113/F20DV/gh-pages/flatiron.png") 
+  .attr("width", xMax - 50) 
+  .attr("height", yMax - 50 ) 
+  .attr("x", 50) 
+  .attr("y",50); 
+
 
 const y = d3.scaleLinear() 
 
@@ -164,7 +174,7 @@ svg.selectAll("text")
       }
    
    })
+   
 
-</script> 
 
- 
+</script>
