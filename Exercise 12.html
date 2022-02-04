@@ -9,9 +9,9 @@ var svg = d3.select("body")
     .attr("width", 400)
     .attr("height", 400)
     .style("border", '1px solid green');
-
+//go through each row in csv file
 d3.csv(csv, function(data){
-			
+			//if the data attribute name is rectangle, create a rect shape 
       if(data.shape == "rectangle"){
       svg.append("rect") 
             .attr("x", data.x) 
@@ -20,12 +20,32 @@ d3.csv(csv, function(data){
             .attr("height", data.height) 
             .attr("fill", data.color); 
       }
+      //if it's circle, then create a circle
       else if(data.shape == "circle"){
+      console.log("circle printed")
       svg.append("circle") 
        .attr("cx", data.cx) 
-       .attr("cy", data.cy) 
+       .attr("cy", data.cy)
+       .attr("fill", data.color)
        .attr("r", data.r);
       }
+      //or create an ellipse
+      else if(data.shape == "ellipse"){
+      svg.append("ellipse")
+        .attr("cx", data.cx)
+        .attr("cy", data.cy)
+        .attr("rx", data.rx)
+        .attr("ry", data.ry)
+        }
+        //or make a text box
+      else if(data.shape == "text"){
+      	svg.append("text")
+        .attr("x", data.x)
+        .attr("y", data.y)
+        .text("hey")
+        .attr("fill", data.color)
+      }
+      
 
 
 });
