@@ -1,0 +1,55 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+
+//use a boolean to determine if the text has been created    
+var created = false;
+ d3.select('body')
+ .append('svg')
+ .attr("width",300)
+ .attr("height", 300)
+ d3.select("svg")
+ .on("mouseover", function(event){
+  //get the current location of the mouse pointer
+  var location = d3.pointer(event);
+
+  //so it is only created once
+  if(!created){
+  created = true;
+
+  //append the text to the svg where the mouse currently is
+   d3.select(this)
+   .append("g")
+   .append("text")
+   .text("Here I am")
+   .attr("x", location[0])
+   .attr("y", location[1]);}
+ })
+ //when the mouse moves, simply update the location of the text to the new mouse co-ordinates
+ .on("mousemove", function(event){
+    var location = d3.pointer(event);
+ 	d3.selectAll("text")
+   .attr("x", location[0])
+   .attr("y", location[1]);
+ 
+ })
+
+ //same as previous, though becasuse the pointer is technically on the svg in the hierarchy, this code does not run
+ //kept for posterity and to be commented on
+ d3.select("svg")
+ .append("circle")
+ .attr('cx', 100)
+.attr('cy', 100)
+ .attr('r', 40)
+ .attr('fill', 'green');
+ d3.selectAll("circle")
+ .on("mouseover", function(event){
+ d3.select(this)
+ .attr("fill", "orange")
+ .attr("r", 100)
+ })
+ .on("mouseout", function(){
+ d3.select(this)
+ .attr('r', 40)
+ .attr('fill', 'green');
+ });
+</script>

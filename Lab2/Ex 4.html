@@ -1,0 +1,32 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+//same as previous 
+ d3.select('body')
+ .append('svg')
+ .attr("width",300)
+ .attr("height", 300)
+
+ //append the circle with the default values
+ d3.select("svg")
+ .append("circle")
+ .attr('cx', 100)
+.attr('cy', 100)
+ .attr('r', 40)
+ .attr('fill', 'green');
+
+ //similar to previous example but append circle instead of rectangle
+ d3.selectAll("circle")
+ .on("mouseover", function(event){
+
+//make the circle's radius larger and the circle orange
+ d3.select(this)
+ .attr("fill", "orange")
+ .attr("r", 100)
+ })
+ .on("mouseout", function(){
+//make circle smaller and green again 
+ d3.select(this)
+ .attr('r', 40)
+ .attr('fill', 'green');
+ });
+</script>

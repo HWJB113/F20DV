@@ -1,0 +1,24 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+
+//intro into the transitions
+d3.select('body')
+//create the original div
+ .append("div")
+ .style('width', '100px')
+ .style('height', '100px')
+ .style('background-color', 'blue')
+ //the start of the first transition, duration 1000 means 1000ms or 1 second
+ //over the course of that second, grow in size and change to red
+ .transition()
+ .duration(1000)
+ .style("background-color", "red")
+ .style('width', '200px')
+ .style('height', '200px')
+ //once the first transition is completed, begin to shrink and change to green
+ .transition()
+ .duration(2000)
+ .style("background-color", "green")
+  .style('width', '50px')
+ .style('height', '50px');
+</script>

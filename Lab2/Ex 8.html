@@ -1,0 +1,31 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+
+//same initialisaion as the previous exercise
+d3.select('body')
+ .append("div")
+ .style('width', '100px')
+ .style('height', '100px')
+ .style('background-color', 'blue')
+
+ //on mouse hover , make the box larger and red over the course of a second
+ d3.selectAll("div")
+ .on("mouseover", function(event){
+ d3.select(this).transition()
+ .duration(1000)
+ .style("background-color", "red")
+ .style('width', '200px')
+ .style('height', '200px')
+ })
+ //when the mouse is removed, over the course of 2 seconds shirink and become blue again
+ d3.selectAll("div")
+ .on("mouseout", function(event){
+  d3.select(this).transition()
+  .duration(2000)
+ .style("background-color", "blue")
+  .style('width', '50px')
+ .style('height', '50px');
+ 
+ })
+
+</script>

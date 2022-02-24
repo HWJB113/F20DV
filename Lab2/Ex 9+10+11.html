@@ -1,0 +1,93 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+d3.select('body')
+
+//create the first div, which will bounce ease into a smaller size
+ .append("div")
+ .style('width', '100px')
+ .style('height', '100px')
+ .style('background-color', 'blue')
+ .style('transform', 'scale(1.0)')
+ .transition()
+ .ease( d3.easeBounce )
+ .duration(1000)
+ .style("background-color", "red")
+ .style('transform', 'scale(0.5)')
+ 
+ //create the circle which will bounce larger when it is hovered over
+ d3.select('body')
+ .append("svg")
+ .style('width', '500px')
+ .style('height', '100px')
+ .append("circle")
+ .attr('cx', '50px')
+ .attr('cy', '50px')
+ .attr('r', 40)
+ .style('fill', 'blue')
+ d3.select("circle").on("mouseover", function(event){
+  //uses the same bounce type as the previous one
+ d3.select(this).transition()
+ .ease( d3.easeBounce )
+ .duration(1000)
+ .style("fill", "red")
+ .attr('r', 50)
+ })
+
+ //when the mouse is removed, scale back down 
+ d3.select("circle").on("mouseout", function(event){
+  d3.select(this).transition()
+ .ease( d3.easeBounce )
+ .duration(1000)
+ .style("fill", "blue")
+ .attr('r', 40)
+ })
+
+ //create the text element which will become larger over a preiod of 1 second
+d3.select("svg")
+.append("g")
+.append("text")
+.attr('x', 125)
+.attr('y', 50)
+.style('font-size', "20px")
+.text("Hello There")
+ d3.select("text").on("mouseover", function(event){
+  d3.select(this).transition()
+ .ease( d3.easeBounce )
+ .duration(1000)
+ .style("fill", "red")
+ .style('font-size', "35px")
+ })
+ //when mouse removed, shrink to origianl size over 1 second
+ d3.select("text").on("mouseout", function(event){
+  d3.select(this).transition()
+ .ease( d3.easeBounce )
+ .duration(1000)
+ .style("fill", "blue")
+.style('font-size', "20px")
+ })
+
+ //second and third divs are created, the only difference being the type of easing 
+ d3.select('body')
+ .append("div")
+ .style('width', '100px')
+ .style('height', '100px')
+ .style('background-color', 'blue')
+ .style('transform', 'scale(1.0)')
+ .transition()
+ .ease( d3.easeElastic )
+ .duration(1000)
+ .style("background-color", "red")
+ .style('transform', 'scale(0.5)')
+ 
+ d3.select('body')
+ .append("div")
+ .style('width', '100px')
+ .style('height', '100px')
+ .style('background-color', 'blue')
+ .style('transform', 'scale(1.0)')
+ .transition()
+ .ease( d3.easeExp )
+ .duration(1000)
+ .style("background-color", "red")
+ .style('transform', 'scale(0.5)')
+</script>

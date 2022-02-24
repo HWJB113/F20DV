@@ -1,0 +1,29 @@
+<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<script>
+//create the style of the div with the default colour scheme/width/height  
+ d3.select('body')
+ .append('div')
+ .style('width', '100px')
+ .style('height', '20px')
+ .style('background-color', 'green');
+
+ //select all of the div elements in body (just one here)
+ d3.selectAll("div")
+
+ //uses a mouse over event to trigger a function call
+ .on("mouseover", function(event){
+ //in the case of events like mouse calls, "this" refers the caller of the function, the div here 
+ d3.select(this)
+ //set the style of the div to the required parameters, changing color, border style and width 
+ .style("background-color", "orange")
+ .style("width", "200px")
+ .style("border-style", "dotted");
+ })
+ //when the mouse is moved off of the div, reset the width and border, change color to a blue
+ .on("mouseout", function(){
+ d3.select(this)
+ .style("background-color", "steelblue")
+ .style("width", "100px")
+ .style("border-style", "none")
+ });
+</script>
