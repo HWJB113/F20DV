@@ -2,6 +2,7 @@
 <button onclick="change([5345, 2879, 1997, 2437, 4045])">Data Set 1</button>
 <button onclick="change([4000, 2000, 1000, 3000, 5000])">Data Set 2</button>
 <script>
+ //data set to be switched between
 var dataset = {
  apples: [5345, 2879, 1997, 2437, 4045],
  oranges: [4000, 2000, 1000, 3000, 5000]
@@ -10,8 +11,10 @@ var width = 460,
  height = 300,
  radius = Math.min(width, height) / 2;
 var color = d3.scaleOrdinal().range(d3.schemeSet3);
+ //form the pie chart object 
 var pie = d3.pie()
  .sort(null);
+ //create the arc shape, which slices will be called into to ensure uniform radii
 var arc = d3.arc()
  .innerRadius(radius - 100)
  .outerRadius(radius - 50);
@@ -28,6 +31,8 @@ var path = svg.selectAll("path")
  .each(function(d) { this._current = d; })
  .transition()
  .duration(1000)
+//calls the attrTween which creates the function generating the arcs via transition, finding the "angle" interpolated value between ther start and end
+//angle
  .attrTween("d", function (d) {
  var i = d3.interpolate(d.endAngle, d.startAngle);
  return function (t) {
@@ -37,6 +42,9 @@ var path = svg.selectAll("path")
  });
  
  function update(data){
+  //redraw the arcs
+  //thiss makes them retract and become invisible
+  //was going to be used in conjunction with the next function but could not get working
  console.log(this.value)
  svg.selectAll("path")
   .transition()
@@ -52,6 +60,9 @@ var path = svg.selectAll("path")
  
  
  function change(data){
+  //redraws the arcs on the pie chart
+  //is the same as when initilaised but removes the previous paths first
+  //before redrawing with the newly passed in information 
  svg.selectAll("path").remove()
  var path = svg.selectAll("path")
  .data(pie(data))
