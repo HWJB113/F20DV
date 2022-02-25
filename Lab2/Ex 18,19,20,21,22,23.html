@@ -1,33 +1,33 @@
-<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
+<<script type='text/javascript' src='https://d3js.org/d3.v7.min.js'></script>
 <!-- Add buttons -->
 <button onclick="update(data1)">Variable 1</button>
 <button onclick="update(data2)">Variable 2</button>
 <button onclick="update(data3)">Variable 3</button>
 <script>
-// create 2 data_set
+// create the 3 data_sets. 
 const data1 = [
  {group: "A", value: 5},
  {group: "B", value: 20},
  {group: "C", value: 9},
- {group:"D", value: 10}
+ "green"
 ];
 const data2 = [
  {group: "A", value: 10},
  {group: "B", value: 2},
  {group: "C", value: 22},
- {test:"Red", color: "red"}
+ "red"
 ];
 const data3 = [
  {group: "A", value: 1},
  {group: "B", value: 10},
  {group: "C", value: 17},
- {test:"Blue", color: "blue"}
+ "blue"
 ];
 // set the dimensions and margins of the graph
 const margin = {top: 30, right: 30, bottom: 70, left: 60};
 const width = 460 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
-// append the svg object to the body of the page
+// append the svg object to the body of the page using the margin variables to adjust the width and height 
 var svg = d3.select('body')
  .append('div')
  .append("svg")
@@ -37,6 +37,8 @@ var svg = d3.select('body')
  .attr("transform",
  "translate(" + margin.left + "," + margin.top + ")");
 // X axis
+//create an x axis that bands certain groups of values togethe, starting from point 0 and extending until width
+//domain is the list of values in any one dataset. If data1 had 4 sets of values, there would be four bars/notches on axis
 var x = d3.scaleBand()
  .range([ 0, width ])
  .domain(data1.map(function(d) { return d.group; }))
@@ -44,7 +46,8 @@ var x = d3.scaleBand()
 svg.append("g")
  .attr("transform", "translate(0," + height + ")")
  .call(d3.axisBottom(x))
- 
+ //create an  top x axis that bands certain groups of values togethe, starting from point 0 and extending until width
+//domain is the list of values in any one dataset. If data1 had 4 sets of values, there would be four bars/notches on a
  var topx = d3.scaleBand()
  .range([ 0, width ])
  .domain(data1.map(function(d) { return d.group; }))
@@ -54,13 +57,14 @@ svg.append("g")
  .call(d3.axisTop(topx))
  
 // Add Y axis
+//scales from 0 to 20, though could be adjusted to take the maximum value from a dataset to stop set 2 wehere exceeds bounds
 var y = d3.scaleLinear()
  .domain([0, 20])
  .range([ height, 0]);
 svg.append("g")
  .attr("class", "myYaxis")
  .call(d3.axisLeft(y));
- 
+ //scales from 0 to 20, though could be adjusted to take the maximum value from a dataset to stop set 2 wehere exceeds bounds
  var righty = d3.scaleLinear()
  .domain([0, 20])
  .range([ height, 0]);
@@ -71,22 +75,23 @@ svg.append("g")
  
 // A function that create / update the plot for a given variable:
 function update(data) {
-//d3.select("svg").data(data).on("mouseover", onMouseOver)
-//d3.select("svg").data(data).on("mouseout", onMouseOut)
  var u = svg.selectAll("rect")
  .data(data)
  u .enter()
+ //create the new bar when button clicked
  .append("rect")
+ //merge the values of the bars, without this line new bar not geneerated
  .merge(u)
  .on("mouseover", onMouseOver)
  .on("mouseout", onMouseOut)
+ //transition between old and new dataset
  .transition()
  .duration(1000)
  .attr("x", function(d) { return x(d.group); })
  .attr("y", function(d) { return y(d.value); })
  .attr("width", x.bandwidth())
  .attr("height", function(d) { return height - y(d.value); })
- .attr("fill", "steelblue")
+ .attr("fill", data[3])
  
 }
 // Initialize the plot with the first dataset
@@ -94,16 +99,20 @@ update(data1)
 
 
 function onMouseOver(d,i){
+//to ensure the pop up is in the right place, get the attributes of the bar calling the function
 	var g = d3.select(this).attr("x")
   var h = d3.select(this).attr("width")
   var y = d3.select(this).attr("y")
   d3.select("svg").append("g").append("text")
   	.attr("class", "label")
+    //numbers chosen here to create offsets so that the number appears in the correct position
+    //hardcoded but will adjust to any value used
     .attr("x", +g + +h)
     .attr("y", +y + 20)
     .text(i.value);
 }
 function onMouseOut(d,i){
+//remove the text when mouse leaves the bar
 	d3.select(".label").remove("text")
 }
 </script>
