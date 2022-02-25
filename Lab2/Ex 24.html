@@ -2,5 +2,9 @@
 <script>
 let intr = d3.interpolate( [20, 40, 4], [1, 12, 10])
 console.log("Type of returned function is: ", typeof (intr) );
+  
 console.log( intr(0.2) )
+  // values are [16.2, 34.4, 5.2]
+  //this is because interpolation gets the value that lies X amount between the two values given, in this case .2 or 20%. 16.2 is 20% of the way between 20 and 1 (with rounding
+  //as 0 not included
 </script>
