@@ -2,7 +2,9 @@
 <script src="https://unpkg.com/d3-force-attract@latest"></script>
 <script>
 var width = 400, height = 400;
+  //the tooltip div set to be invisble when init'd
 d3.select('body').append('div').attr('id', 'tooltip').attr('style', 'position: absolute; opacity: 0;');
+ //the way the colours are chosen, from this array of colours
 var colors = ["blue", "green", "red", "purple", "steelblue", "orange" , "brown", "yellow", "black"]
 console.log(Math.floor(Math.random() * 10))
 // setup svg
@@ -15,6 +17,10 @@ var nodes = d3.range(numNodes).map(function(d) {
  return {radius: Math.random() * 25}
 })
 var initForce = 5
+//the different forces being applied in the simulation 
+// many body being the force that pulls them together
+//and collision provides the force that allows
+//the circles to bump into each other 
 var simulation = d3.forceSimulation(nodes)
  .force('charge', d3.forceManyBody().strength(initForce))
   .force('charge', d3.forceManyBody().strength(initForce))
@@ -25,22 +31,23 @@ var simulation = d3.forceSimulation(nodes)
  .force('attract', d3.forceAttract()
  .target([width / 2, height / 2]))
  .on('tick', ticked);
-/*  .on('click', function(event){
- initForce = -10
- d3.select(this).force('charge', d3.forceManyBody().strength(initForce))
- });  */
 function ticked() {
+  //where the circles are drawn and forces applied to them
  var u = d3.select('svg')
  .selectAll('circle')
  .data(nodes)
  .join('circle')
  .on("mouseover", function(event){
+  //change the colour to another random one
  d3.select(this).attr('fill', function(d){return colors[Math.floor(Math.random() * 10)]})
+  //make the tooltip div appear, and show the colour of the current circle moused over
  d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d3.select(this).attr('fill'))
  })
  .on("mouseout", function(event){
+  //wheen the mouse leaves the circle, remove the text with a transition 
  d3.select('#tooltip').transition().duration(200).style('opacity', 0)
  })
+ //get a random number between 0 and 9 which indexes the array 
  .attr('fill', function(d){return colors[Math.floor(Math.random() * 10)]})
  .attr('r', function(d) {
  return d.radius
@@ -53,7 +60,9 @@ function ticked() {
  })
 }
 console.log('ready..');
-
+//creates a new force to apply to the circles which causes them to follow the mouse pointer as it moves. 
+ //since it restarts the simulation to apply the force changes, the colours will continously flash as the code
+ //initing the colour is rerun.
 svg.on('mousemove', function (event) {
     simulation.force('attract').target(d3.pointer(event, this));
     simulation
