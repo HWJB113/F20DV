@@ -2,4 +2,7 @@
 <script>
 let cc = d3.interpolate(new Date('2000-02-17'), new Date('1950-01-18'))
 console.log( cc(0.5).toDateString() );
+  //done the same way as interpolating with numbers though pass in a date object instead
+  //.interpolate recongises the date and actually calls an intermiadery function called interpolateDate
+  //simply gets the mispoint of the 2 dates in this case. Returns a date object which needs to be parsed.
 </script>
